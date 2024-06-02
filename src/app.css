@@ -1,0 +1,15 @@
+.countdown-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    text-align: center;
+}
+.countdown-container h3 {
+    margin-top: 0;
+}
+
+.countdown-text {
+    font-size: 20px;
+    text-align: center;
+}

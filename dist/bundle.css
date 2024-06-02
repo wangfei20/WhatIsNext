@@ -1,0 +1,32 @@
+/* node_modules/tailwindcss/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* node_modules/tailwindcss/base.css */
+@tailwind base;
+
+/* node_modules/tailwindcss/components.css */
+@tailwind components;
+
+/* node_modules/tailwindcss/utilities.css */
+@tailwind utilities;
+
+/* styles/globals.css */
+
+/* src/app.css */
+.countdown-container {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+  text-align: center;
+}
+.countdown-container h3 {
+  margin-top: 0;
+}
+.countdown-text {
+  font-size: 20px;
+  text-align: center;
+}
+/*# sourceMappingURL=bundle.css.map */

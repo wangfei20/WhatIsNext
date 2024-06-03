@@ -24,7 +24,7 @@ export function Link({href, children,className}){
 class Router extends EventTarget {
     constructor(){
         super()
-        this.pathname = window.location.pathname
+        this.pathname = typeof window !== "undefined" ? window.location.pathname : ""
     }
 
     push(url){

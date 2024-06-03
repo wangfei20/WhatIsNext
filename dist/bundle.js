@@ -983,26 +983,26 @@
             }
             return lazyType;
           }
-          function forwardRef(render2) {
+          function forwardRef(render) {
             {
-              if (render2 != null && render2.$$typeof === REACT_MEMO_TYPE) {
+              if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
-              } else if (typeof render2 !== "function") {
-                error("forwardRef requires a render function but was given %s.", render2 === null ? "null" : typeof render2);
+              } else if (typeof render !== "function") {
+                error("forwardRef requires a render function but was given %s.", render === null ? "null" : typeof render);
               } else {
-                if (render2.length !== 0 && render2.length !== 2) {
-                  error("forwardRef render functions accept exactly two parameters: props and ref. %s", render2.length === 1 ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
+                if (render.length !== 0 && render.length !== 2) {
+                  error("forwardRef render functions accept exactly two parameters: props and ref. %s", render.length === 1 ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
                 }
               }
-              if (render2 != null) {
-                if (render2.defaultProps != null || render2.propTypes != null) {
+              if (render != null) {
+                if (render.defaultProps != null || render.propTypes != null) {
                   error("forwardRef render functions do not support propTypes or defaultProps. Did you accidentally pass a React component?");
                 }
               }
             }
             var elementType = {
               $$typeof: REACT_FORWARD_REF_TYPE,
-              render: render2
+              render
             };
             {
               var ownName;
@@ -1014,8 +1014,8 @@
                 },
                 set: function(name) {
                   ownName = name;
-                  if (!render2.name && !render2.displayName) {
-                    render2.displayName = name;
+                  if (!render.name && !render.displayName) {
+                    render.displayName = name;
                   }
                 }
               });
@@ -1096,7 +1096,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState4(initialState) {
+          function useState5(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1104,11 +1104,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef(initialValue) {
+          function useRef2(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect4(create, deps) {
+          function useEffect5(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1124,7 +1124,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo2(create, deps) {
+          function useMemo3(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -1891,15 +1891,15 @@
           exports.useContext = useContext2;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect4;
+          exports.useEffect = useEffect5;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect;
-          exports.useMemo = useMemo2;
+          exports.useMemo = useMemo3;
           exports.useReducer = useReducer;
-          exports.useRef = useRef;
-          exports.useState = useState4;
+          exports.useRef = useRef2;
+          exports.useState = useState5;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2395,9 +2395,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React7 = require_react();
+          var React9 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React7.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React9.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -4002,7 +4002,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React7.Children.forEach(props.children, function(child) {
+                  React9.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -16229,7 +16229,7 @@
                 }
               }
             }
-            var render3 = Component.render;
+            var render2 = Component.render;
             var ref = workInProgress2.ref;
             var nextChildren;
             var hasId;
@@ -16240,12 +16240,12 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              nextChildren = renderWithHooks(current2, workInProgress2, render3, nextProps, ref, renderLanes2);
+              nextChildren = renderWithHooks(current2, workInProgress2, render2, nextProps, ref, renderLanes2);
               hasId = checkDidRenderIdHook();
               if (workInProgress2.mode & StrictLegacyMode) {
                 setIsStrictModeForDevtools(true);
                 try {
-                  nextChildren = renderWithHooks(current2, workInProgress2, render3, nextProps, ref, renderLanes2);
+                  nextChildren = renderWithHooks(current2, workInProgress2, render2, nextProps, ref, renderLanes2);
                   hasId = checkDidRenderIdHook();
                 } finally {
                   setIsStrictModeForDevtools(false);
@@ -17599,9 +17599,9 @@
               }
             }
             var newProps = workInProgress2.pendingProps;
-            var render3 = newProps.children;
+            var render2 = newProps.children;
             {
-              if (typeof render3 !== "function") {
+              if (typeof render2 !== "function") {
                 error("A context consumer was rendered with multiple children, or a child that isn't a function. A context consumer expects a single child that is a function. If you did pass a function, make sure there is no trailing or leading whitespace around it.");
               }
             }
@@ -17614,7 +17614,7 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              newChildren = render3(newValue);
+              newChildren = render2(newValue);
               setIsRendering(false);
             }
             {
@@ -23054,7 +23054,7 @@
               unmarkContainerAsRoot(container);
             }
           };
-          function createRoot(container, options2) {
+          function createRoot2(container, options2) {
             if (!isValidContainer(container)) {
               throw new Error("createRoot(...): Target container is not a DOM element.");
             }
@@ -23330,7 +23330,7 @@
             }
             return legacyRenderSubtreeIntoContainer(null, element, container, true, callback);
           }
-          function render2(element, container, callback) {
+          function render(element, container, callback) {
             {
               error("ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot");
             }
@@ -23437,7 +23437,7 @@
                 error('You are importing createRoot from "react-dom" which is not supported. You should instead import it from "react-dom/client".');
               }
             }
-            return createRoot(container, options2);
+            return createRoot2(container, options2);
           }
           function hydrateRoot$1(container, initialChildren, options2) {
             {
@@ -23478,7 +23478,7 @@
           exports.flushSync = flushSync$1;
           exports.hydrate = hydrate;
           exports.hydrateRoot = hydrateRoot$1;
-          exports.render = render2;
+          exports.render = render;
           exports.unmountComponentAtNode = unmountComponentAtNode;
           exports.unstable_batchedUpdates = batchedUpdates$1;
           exports.unstable_renderSubtreeIntoContainer = renderSubtreeIntoContainer;
@@ -23501,6 +23501,79 @@
       } else {
         module.exports = require_react_dom_development();
       }
+    }
+  });
+
+  // node_modules/react-dom/client.js
+  var require_client = __commonJS({
+    "node_modules/react-dom/client.js"(exports) {
+      "use strict";
+      var m = require_react_dom();
+      if (false) {
+        exports.createRoot = m.createRoot;
+        exports.hydrateRoot = m.hydrateRoot;
+      } else {
+        i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        exports.createRoot = function(c, o) {
+          i.usingClientEntryPoint = true;
+          try {
+            return m.createRoot(c, o);
+          } finally {
+            i.usingClientEntryPoint = false;
+          }
+        };
+        exports.hydrateRoot = function(c, h, o) {
+          i.usingClientEntryPoint = true;
+          try {
+            return m.hydrateRoot(c, h, o);
+          } finally {
+            i.usingClientEntryPoint = false;
+          }
+        };
+      }
+      var i;
+    }
+  });
+
+  // components/router.js
+  function Link({ href, children, className }) {
+    return /* @__PURE__ */ import_react.default.createElement("span", { className, onClick: function() {
+      _Router.push(href);
+    } }, children);
+  }
+  var import_react, Router, _Router, useRouter;
+  var init_router = __esm({
+    "components/router.js"() {
+      import_react = __toESM(require_react(), 1);
+      Router = class extends EventTarget {
+        constructor() {
+          super();
+          this.pathname = typeof window !== "undefined" ? window.location.pathname : "";
+        }
+        push(url) {
+          window.history.pushState({}, "", url);
+          this.dispatchEvent(new Event("popstate"));
+        }
+        replace(url) {
+          window.history.replaceState({}, "", url);
+        }
+      };
+      _Router = new Router();
+      useRouter = function() {
+        const [router, setRouter] = (0, import_react.useState)(_Router);
+        function update(event) {
+          setRouter({ ..._Router, pathname: window.location.pathname });
+        }
+        (0, import_react.useEffect)(() => {
+          window.addEventListener("popstate", update);
+          _Router.addEventListener("popstate", update);
+          return () => {
+            window.removeEventListener("popstate", update);
+            _Router.removeEventListener("popstate", update);
+          };
+        }, []);
+        return router;
+      };
     }
   });
 
@@ -23577,87 +23650,88 @@
     }
   });
 
+  // src/pages/posts/index.js
+  var posts_exports = {};
+  __export(posts_exports, {
+    default: () => Posts,
+    getStaticProps: () => getStaticProps3
+  });
+  function Posts({ posts }) {
+    return /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("h2", null, "All Posts"), /* @__PURE__ */ import_react6.default.createElement("div", null, posts.map((post) => /* @__PURE__ */ import_react6.default.createElement("div", { key: post.slug }, /* @__PURE__ */ import_react6.default.createElement(Link, { href: `posts/${post.slug}` }, post.slug)))));
+  }
+  function getStaticProps3() {
+    const posts = [
+      { slug: "fiona" },
+      { slug: "jimmy" },
+      { slug: "susan" }
+    ];
+    return {
+      props: { posts }
+    };
+  }
+  var import_react6;
+  var init_posts = __esm({
+    "src/pages/posts/index.js"() {
+      import_react6 = __toESM(require_react(), 1);
+      init_router();
+    }
+  });
+
   // src/index.js
-  var import_react_dom = __toESM(require_react_dom(), 1);
-  var import_react6 = __toESM(require_react(), 1);
+  var import_client = __toESM(require_client(), 1);
+  var import_react8 = __toESM(require_react(), 1);
 
   // src/app.jsx
   var import_react2 = __toESM(require_react(), 1);
-
-  // components/router.js
-  var import_react = __toESM(require_react(), 1);
-  function Link({ href, children, className }) {
-    return /* @__PURE__ */ import_react.default.createElement("span", { className, onClick: function() {
-      _Router.push(href);
-    } }, children);
-  }
-  var Router = class extends EventTarget {
-    constructor() {
-      super();
-      this.pathname = window.location.pathname;
-    }
-    push(url) {
-      window.history.pushState({}, "", url);
-      this.dispatchEvent(new Event("popstate"));
-    }
-    replace(url) {
-      window.history.replaceState({}, "", url);
-    }
-  };
-  var _Router = new Router();
-  var useRouter = function() {
-    const [router, setRouter] = (0, import_react.useState)(_Router);
-    function update(event) {
-      setRouter({ ..._Router, pathname: window.location.pathname });
-    }
-    (0, import_react.useEffect)(() => {
-      window.addEventListener("popstate", update);
-      _Router.addEventListener("popstate", update);
-      return () => {
-        window.removeEventListener("popstate", update);
-        _Router.removeEventListener("popstate", update);
-      };
-    }, []);
-    return router;
-  };
-
-  // src/app.jsx
+  init_router();
   function Layout({ children }) {
-    return /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement(Link, { className: "px-3 cursor-pointer", href: "/" }, "Home"), /* @__PURE__ */ import_react2.default.createElement(Link, { href: "/about" }, "About"), /* @__PURE__ */ import_react2.default.createElement(Link, { href: "/posts/jimmy" }, "Jimmy")), children);
+    return /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "nav" }, /* @__PURE__ */ import_react2.default.createElement(Link, { href: "/" }, "Home"), /* @__PURE__ */ import_react2.default.createElement(Link, { href: "/about" }, "About"), /* @__PURE__ */ import_react2.default.createElement(Link, { href: "/posts" }, "Posts")), children);
   }
   function App({ Component, pageProps }) {
     return /* @__PURE__ */ import_react2.default.createElement(Layout, null, /* @__PURE__ */ import_react2.default.createElement(Component, { ...pageProps }));
   }
 
-  // import("./pages/**/*") in src/index.js
+  // src/pagesRouter.js
+  var import_react7 = __toESM(require_react(), 1);
+  init_router();
+
+  // import("./pages/**/*") in src/pagesRouter.js
   var globImport_pages = __glob({
     "./pages/about.js": () => Promise.resolve().then(() => (init_about(), about_exports)),
     "./pages/index.js": () => Promise.resolve().then(() => (init_pages(), pages_exports)),
-    "./pages/posts/[slug].js": () => Promise.resolve().then(() => (init_slug(), slug_exports))
+    "./pages/posts/[slug].js": () => Promise.resolve().then(() => (init_slug(), slug_exports)),
+    "./pages/posts/index.js": () => Promise.resolve().then(() => (init_posts(), posts_exports))
   });
 
-  // src/index.js
-  function PagesRouter() {
-    const [module, setModule] = (0, import_react6.useState)();
-    const [pageProps, setPageProps] = (0, import_react6.useState)();
+  // src/pagesRouter.js
+  function PagesRouter({ App: App2 }) {
+    const [module, setModule] = (0, import_react7.useState)();
     const router = useRouter();
-    const routes = (0, import_react6.useMemo)(() => {
+    const routes = (0, import_react7.useMemo)(() => {
       let routeData = document.getElementById("__ROUTE_DATA__");
       return JSON.parse(routeData.textContent);
     }, [router]);
-    (0, import_react6.useEffect)(() => {
+    (0, import_react7.useEffect)(() => {
       async function fetchData() {
-        console.log(router, routes);
-        let url = router.pathname == "/" ? "index" : router.pathname;
+        let url = router.pathname == "/" ? "index" : router.pathname.substring(1);
         let match;
         let route = routes.find((r) => {
-          match = url.match(new RegExp(r.regex, "i"));
-          if (match) {
+          match = url.match(new RegExp(`^${r.regex}$`, "i"));
+          if (match && match.length > 0) {
             return true;
           }
         });
-        if (!match)
-          return;
+        if (!route) {
+          url = (url + "/index").replace("//", "/");
+          route = routes.find((r) => {
+            match = url.match(new RegExp(`^${r.regex}$`, "i"));
+            if (match && match.length > 0) {
+              return true;
+            }
+          });
+          if (!match)
+            return;
+        }
         let query = route.query.reduce((agg, curr, i) => {
           agg.push({
             [curr]: match[i + 1]
@@ -23667,32 +23741,35 @@
         router.query = query;
         window.query = query;
         window.route = route;
-        console.log(route, query, match);
         let props;
         if (route.props) {
           let JSONpath = `/${route.path}${query?.length > 0 ? "/" + query[0][route.query[0]] : ""}`;
-          console.log("JSON", JSONpath);
           let res = await fetch(`${JSONpath}.json`);
           props = await res.json();
         }
-        setPageProps(props);
         route.component = route.component.replace("\\", "/");
+        console.log(route, query, match);
         try {
           let mod = await globImport_pages(`./pages/${route.component}`);
-          setModule(mod);
+          setModule({
+            component: mod.default,
+            pageProps: props
+          });
         } catch (error) {
+          console.log(error);
         }
       }
       fetchData();
     }, [routes, router.pathname]);
     if (module) {
-      return /* @__PURE__ */ import_react6.default.createElement(App, { Component: module.default, pageProps });
+      return /* @__PURE__ */ import_react7.default.createElement(App2, { Component: module.component, pageProps: module.pageProps });
     } else
-      return /* @__PURE__ */ import_react6.default.createElement("div", null, "Loading...");
+      return /* @__PURE__ */ import_react7.default.createElement("div", null, "Loading...");
   }
-  (0, import_react_dom.render)(
-    /* @__PURE__ */ import_react6.default.createElement(PagesRouter, null),
-    document.getElementById("root")
+
+  // src/index.js
+  (0, import_client.createRoot)(document.getElementById("root")).render(
+    /* @__PURE__ */ import_react8.default.createElement(PagesRouter, { App })
   );
 })();
 /*! Bundled license information:

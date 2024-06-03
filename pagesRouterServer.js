@@ -1,6 +1,5 @@
 import fs from "fs/promises"
 import path from "path"
-import http from "http"
 
 const DEFAULT = 1
 const INDEX = 2
@@ -12,8 +11,10 @@ const rootFolder = "./src/pages/"
 const out = "dist"
 
 async function createRoutes(directory){
+    
     const files = await fs.readdir(`${rootFolder}${directory}`)
-    return Promise.all(files.map(async(file)=>{
+
+    return Promise.all( files.map(async(file)=>{
 
       const fullPath = path.join(rootFolder,directory, file);
       //posts/[slug].js actual component file path
@@ -34,13 +35,11 @@ async function createRoutes(directory){
 
         let regex = routePath
 
+        let query = []
+        
         if(!type && directory == "") {
             type = DEFAULT
-        }
-
-        let query = []
-
-        if(type > INDEX){
+        }  else if(type > INDEX){
             //Dynamic path
             let match
             let r = /\[([^\[\]]+)\]/g
@@ -51,7 +50,6 @@ async function createRoutes(directory){
 
             // routePath should be sans [slug].js
             routePath = path.dirname(routePath)
-            //console.log(regex.exec(url));
         }
 
         let route = {
@@ -62,7 +60,6 @@ async function createRoutes(directory){
             query
         }
 
-        console.log(`./src/pages/${directory}${file}`);
         const module = await import(`./src/pages/${directory}${file}`)
 
         async function getProps(pagePath,context,route){
@@ -94,46 +91,45 @@ async function createRoutes(directory){
 
         routes.push(route);
       }
-    })
-    )
 
-
+    }))
 }
 
-function render(props,template){
+function render(template){
     template = "return `" + template + "`"
-    const render = new Function(Object.keys(props).join(', '),template)
-    return render.apply(null, Object.values(props))
+    return (props)=>{
+        const render = new Function(Object.keys(props).join(', '),template)
+        return render.apply(null, Object.values(props))
+    }
 }
 
-export const pagesRouter = async function(){
+const pagesRouter = async function(){
+    const template = await fs.readFile("./_document.html","utf8")
+    const renderHTML = render(template)
+
     createRoutes("").then(async ()=>{
         console.log("done",routes);
         routes.map(async (route)=>{
     
-            let template = await fs.readFile("./document.html","utf8")
-            
-    
             if(route.subPaths){
                 route.subPaths.map(async (context)=>{
                     const slug = context.params.slug
-                    console.log(route.props[slug]);
-                    let html = render({
+                    let html = renderHTML({
                         page:slug,
                         props:JSON.stringify(route.props[slug]),
                         routes:JSON.stringify(routes)
-                    },template)
+                    })
                     let dir = path.join(out,route.path)
                     await fs.mkdir(dir, { recursive: true });
                     let file = `${path.join(out,route.path,slug)}.html`;
                     await fs.writeFile(file,html)
                 })  
             } else {
-                let html = render({
+                let html = renderHTML({
                     page:route.path,
                     props:JSON.stringify(route.props),
                     routes:JSON.stringify(routes)
-                },template)
+                })
                 let dir = path.join(out,path.dirname(route.path))
                 await fs.mkdir(dir, { recursive: true });
                 let file = `${path.join(out,route.path)}.html`;
@@ -143,4 +139,6 @@ export const pagesRouter = async function(){
         )
     })
 }
+
+export default pagesRouter
 
